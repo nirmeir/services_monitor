@@ -3,8 +3,8 @@ import threading
 import time
 from datetime import datetime
 from multiprocessing import Process
-
 import wmi
+
 
 
 f = wmi.WMI()
@@ -31,11 +31,11 @@ current_date = now.strftime("%d/%m/%y")
 service.write(f"Time : {current_time}\nDate : {current_date}\n\n")
 
 
-for k,v in my_dict.items():
-    service.writelines(f"service_index : {k} , serviceName : {v} \n")
+for v in my_dict.values():
+    service.writelines(f" {v} \n")
 
 
-# print("im done\n")
+
 
 waiting = input("set time for searching")
 
@@ -63,8 +63,8 @@ while True:
         j=j+1
     service = open("serviceList.txt", "a+")
 
-    for k, v in my_dict2.items():
-        service.write(f"service_index : {k} , serviceName : {v} \n")
+    for v in my_dict2.values():
+        service.write(f" {v} \n")
 
     service.close()
 

@@ -10,10 +10,9 @@ def make_test(time,date , time2, date2):
         data2.remove(data2[0])
 
         for index,dat in enumerate (data2):
-            dat = dat.split("\n",maxsplit=2)
+            dat = dat.split("\n",)
             dat[1]=dat[1][7:]
             data2[index]=dat
-
 
 
         j=0
@@ -23,12 +22,11 @@ def make_test(time,date , time2, date2):
             timedict[index]=[int(data2[j][1].replace("/","")),int(data2[j][0].replace(":",""))]
             j+=1
 
-        # print(time_1dict.items())
-        # date_1 = input("please enter a date_1")
+
         date = date.replace("/","")
         date = int(date)
 
-        # time_1 = input("please enter a time_1")
+
         time = time.replace(":","")
         time =int(time)
 
@@ -39,8 +37,7 @@ def make_test(time,date , time2, date2):
         for t,h in timedict.values():
 
             if t == int(date) and h == int(time):
-                print("yes")
-                print(final_index)
+
                 break
             final_index += 1
 
@@ -57,19 +54,14 @@ def make_test(time,date , time2, date2):
 
 
     my_dict={}
+    ind = 0
+
     for i in data2[final_index][2:]:
-        # my_dict[index]=i.replace("\n","")
-        my_dict [index] = i
+        my_dict [ind] = i
+        ind=ind+1
 
     my_dict[0]=final_index
-    # print(my_dict.items())
-    print(my_dict.values())
-    # test = open("test.txt", "a+")
-    # for k, v in my_dict.items():
-    #     test.write(f"service_index : {k} , serviceName : {v} \n")
-    # test.close()
 
-    # print(my_dict.values())
 
     with open("serviceList.txt", "r") as myfile:
         data = myfile.read()
@@ -77,12 +69,10 @@ def make_test(time,date , time2, date2):
         data2 = data.split("Time : ",)
         data2.remove(data2[0])
 
-        for index,dat in enumerate (data2):
-            dat = dat.split("\n",maxsplit=2)
-            dat[1]=dat[1][7:]
-            data2[index]=dat
-
-
+        for index, dat in enumerate(data2):
+            dat = dat.split("\n", )
+            dat[1] = dat[1][7:]
+            data2[index] = dat
 
         j=0
         timedict = {}
@@ -91,12 +81,10 @@ def make_test(time,date , time2, date2):
             timedict[index]=[int(data2[j][1].replace("/","")),int(data2[j][0].replace(":",""))]
             j+=1
 
-        # print(time_1dict.items())
-        # date_1 = input("please enter a date_1")
+
         date2 = date2.replace("/","")
         date2 = int(date2)
 
-        # time_1 = input("please enter a time_1")
         time2 = time2.replace(":","")
         time2 =int(time2)
 
@@ -108,8 +96,7 @@ def make_test(time,date , time2, date2):
         for t,h in timedict.values():
 
             if t == int(date2) and h == int(time2):
-                print("yes")
-                print(final_index)
+
                 break
             final_index += 1
 
@@ -124,59 +111,58 @@ def make_test(time,date , time2, date2):
                 date2 = (takeClosest(int(date2), timedict.values()))
                 date2 = date2[0]
 
-    my_dict2={}
 
-    for i in data2[final_index][2:]:
-        my_dict2 [index] = i
 
+    my_dict2 = {}
+    indd = 1
     my_dict2[0] = final_index
-    print(my_dict2.values())
+    for i in data2[final_index][2:]:
+        my_dict2[indd] = i
+        indd = indd+1
 
-    # print(data2[final_index])
-    # print(data2[final_index][2:])
+
 
 
     if my_dict[0]>my_dict2[0]:
-        print("my_dict > my_dict2")
 
+        my_dict[0]=""
+        my_dict2[0] = ""
         for value in my_dict2.values():
-            print(value)
+
             if value not in my_dict.values():
                 test = open("test.txt", "a+")
                 test.write(f"the service {value} is Stop\n\n")
-                # print(f"the service {value} is Stop\n\n")
+
 
         for value in my_dict.values():
             if value not in my_dict2.values():
                 test = open("test.txt", "a+")
-                print(f"new service {value} is Running\n\n")
-                # status_Log.write(f"new service {value} is Running\n\n")
-
-    if my_dict[0] < my_dict2[0]:
-        print("my_dict < my_dict2")
-
-        for value in my_dict.values():
-            if value not in my_dict2.values():
-
-                test = open("test.txt", "a+")
-                test.write(f"the service {value} is Stop\n\n")
-                # print(f"the service {value} is Stop\n\n")
-
-        for value in my_dict2.values():
-            if value not in my_dict.values():
-                test = open("test.txt", "a+")
-                # print(f"new service {value[1]} is Running\n\n")
                 test.write(f"new service {value} is Running\n\n")
 
-    test.close()
+    if my_dict[0] < my_dict2[0]:
+
+        my_dict[0] = ""
+        my_dict2[0] = ""
+        for value in my_dict.values():
+            if value not in my_dict2.values():
+
+                test = open("test.txt", "a+")
+                test.write(f"the service {value} is Stop\n\n")
+
+        for value in my_dict2.values():
+            if value not in my_dict.values():
+                test = open("test.txt", "a+")
+                test.write(f"new service {value} is Running\n\n")
+
+
 
 if __name__ == '__main__':
 
 
-        time_1=input("enter a time_1")
-        date_1=input("enter a date_1")
-        time_2 = input("enter a time_2")
-        date_2 = input("enter a date_2")
+        time_1=input("enter a first time : HH:MM:SS")
+        date_1=input("enter a first date : DD/MM/YY")
+        time_2 = input("enter a sec time : HH:MM:SS")
+        date_2 = input("enter a sec date : DD/MM/YY")
 
         make_test(time_1,date_1,time_2,date_2)
 
